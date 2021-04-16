@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>colorfulTrail</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .box {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #000;
+        position: absolute;
+        transition: all 500ms;
+      }
+      .shadow {
+        box-shadow: 0 0 20px 10px #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" onmousemove="showPosition(event)"></div>
+  </body>
+  <script>
+    const container = document.querySelector(".container");
+    var x = 0,
+      y = 0;
+    var Opacity = 1;
+    const stepTime = 0.1;
+    function showPosition(e) {
+      x = e.clientX;
+      y = e.clientY;
+      var box = document.createElement("div");
+      box.className = "box";
+      box.style.cssText = `left:${x}px;top:${y}px;background-color:rgb(${Math.floor(
+        Math.random() * 255
+      )},${Math.floor(Math.random() * 255)},${Math.floor(
+        Math.random() * 255
+      )})`;
+      container.appendChild(box);
+      clearInterval(box.timer);
+      box.timer = setInterval(() => {
+        box.classList.add("shadow");
+        box.style.opacity = Opacity;
+        box.style.width = "50px";
+        box.style.height = "50px";
+        Opacity -= stepTime;
+        if (Opacity <= 0) {
+          clearInterval(box.timer);
+        }
+      }, 10);
+      setTimeout(() => {
+        box.remove();
+      }, 800);
+    }
+  </script>
+</html>
